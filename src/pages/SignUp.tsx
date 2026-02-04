@@ -124,7 +124,7 @@ const SignUp = () => {
           </div>
 
           {/* Footer */}
-          <div className="animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
+          <div className="animate-fade-in-up mt-auto pt-12" style={{ animationDelay: "0.4s" }}>
             <p className="text-sm text-primary-foreground/60">
               © {new Date().getFullYear()} Stratview Research. All rights reserved.
             </p>
