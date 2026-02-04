@@ -77,7 +77,7 @@ const LoginForm = () => {
           </Label>
         </div>
         <a
-          href="#"
+          href="/forgot-password"
           className="text-sm font-medium text-secondary hover:text-stratview-mint transition-colors"
         >
           Forgot password?
