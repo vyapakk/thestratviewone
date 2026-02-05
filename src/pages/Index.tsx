@@ -25,7 +25,7 @@ const Index = () => {
               <img 
                 src={stratviewLogo} 
                 alt="Stratview Research" 
-                className="h-16 xl:h-20 w-auto brightness-0 invert"
+                className="h-20 xl:h-28 w-auto brightness-0 invert"
               />
             </div>
 
@@ -82,7 +82,7 @@ const Index = () => {
               <img 
                 src={stratviewLogo} 
                 alt="Stratview Research" 
-                className="h-10 sm:h-12 w-auto brightness-0 invert"
+                className="h-14 sm:h-16 md:h-20 w-auto brightness-0 invert"
               />
             </div>
             
