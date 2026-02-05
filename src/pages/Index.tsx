@@ -2,17 +2,21 @@ import LoginForm from "@/components/LoginForm";
 import BackgroundPattern from "@/components/BackgroundPattern";
 import stratviewLogo from "@/assets/stratview-logo.png";
 import { BarChart3, Globe2, TrendingUp, Shield } from "lucide-react";
-
 const Index = () => {
-  const features = [
-    { icon: BarChart3, text: "Interactive Market Data" },
-    { icon: Globe2, text: "Global Industry Coverage" },
-    { icon: TrendingUp, text: "Real-time Insights" },
-    { icon: Shield, text: "Enterprise Security" },
-  ];
-
-  return (
-    <div className="min-h-screen flex">
+  const features = [{
+    icon: BarChart3,
+    text: "Interactive Market Data"
+  }, {
+    icon: Globe2,
+    text: "Global Industry Coverage"
+  }, {
+    icon: TrendingUp,
+    text: "Real-time Insights"
+  }, {
+    icon: Shield,
+    text: "Enterprise Security"
+  }];
+  return <div className="min-h-screen flex">
       {/* Left Panel - Branding */}
       <div className="hidden lg:flex lg:w-1/2 xl:w-3/5 relative">
         <BackgroundPattern />
@@ -22,15 +26,13 @@ const Index = () => {
           <div className="space-y-12">
             {/* Logo */}
             <div className="animate-fade-in-up">
-              <img 
-                src={stratviewLogo} 
-                alt="Stratview Research" 
-                className="h-16 xl:h-20 w-auto brightness-0 invert"
-              />
+              <img src={stratviewLogo} alt="Stratview Research" className="h-28 xl:h-20 w-auto brightness-0 invert object-cover" />
             </div>
 
             {/* Main content */}
-            <div className="space-y-8 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+            <div className="space-y-8 animate-fade-in-up" style={{
+            animationDelay: "0.2s"
+          }}>
             <div className="space-y-4">
               <h1 className="text-4xl xl:text-5xl font-bold text-primary-foreground leading-tight">
                 Welcome to
@@ -44,26 +46,24 @@ const Index = () => {
 
             {/* Features */}
             <div className="grid grid-cols-2 gap-4">
-              {features.map((feature, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-3 p-4 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 transition-all duration-300 hover:bg-white/10"
-                  style={{ animationDelay: `${0.4 + index * 0.1}s` }}
-                >
+              {features.map((feature, index) => <div key={index} className="flex items-center gap-3 p-4 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 transition-all duration-300 hover:bg-white/10" style={{
+                animationDelay: `${0.4 + index * 0.1}s`
+              }}>
                   <div className="p-2 rounded-lg bg-stratview-mint/20">
                     <feature.icon className="h-5 w-5 text-stratview-mint" />
                   </div>
                   <span className="text-sm font-medium text-primary-foreground/90">
                     {feature.text}
                   </span>
-                </div>
-              ))}
+                </div>)}
             </div>
           </div>
           </div>
 
           {/* Footer */}
-          <div className="animate-fade-in-up mt-auto pt-12" style={{ animationDelay: "0.6s" }}>
+          <div className="animate-fade-in-up mt-auto pt-12" style={{
+          animationDelay: "0.6s"
+        }}>
             <p className="text-sm text-primary-foreground/60">
               © {new Date().getFullYear()} Stratview Research. All rights reserved.
             </p>
@@ -73,43 +73,34 @@ const Index = () => {
 
       {/* Right Panel - Login Form */}
       <div className="w-full lg:w-1/2 xl:w-2/5 flex flex-col bg-background">
-        {/* Mobile/Tablet Hero Section - Constrained to ~50% viewport height */}
-        <div className="lg:hidden relative overflow-hidden max-h-[50vh]">
+        {/* Mobile/Tablet Hero Section */}
+        <div className="lg:hidden relative overflow-hidden">
           <BackgroundPattern />
-          <div className="relative z-10 px-6 py-6 sm:py-8">
+          <div className="relative z-10 px-6 sm:px-12 py-10 sm:py-12">
             {/* Logo */}
-            <div className="flex justify-center mb-4">
-              <img 
-                src={stratviewLogo} 
-                alt="Stratview Research" 
-                className="h-10 sm:h-12 w-auto brightness-0 invert"
-              />
+            <div className="flex justify-center mb-6">
+              <img src={stratviewLogo} alt="Stratview Research" className="h-12 sm:h-14 w-auto brightness-0 invert" />
             </div>
             
             {/* Heading */}
-            <div className="text-center space-y-2 mb-4">
-              <h1 className="text-xl sm:text-2xl font-bold text-primary-foreground leading-tight">
+            <div className="text-center space-y-3 mb-6">
+              <h1 className="text-2xl sm:text-3xl font-bold text-primary-foreground leading-tight">
                 Welcome to
                 <span className="text-stratview-mint"> Stratview One</span>
               </h1>
-              <p className="text-xs sm:text-sm text-primary-foreground/80 max-w-sm mx-auto">
+              <p className="text-sm sm:text-base text-primary-foreground/80 max-w-md mx-auto">
                 Your unified platform for market research data and strategic intelligence.
               </p>
             </div>
 
-            {/* Features - Compact horizontal layout */}
-            <div className="flex gap-2 justify-center flex-wrap">
-              {features.map((feature, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-1.5 px-2 py-1.5 rounded-md bg-white/10 backdrop-blur-sm border border-white/10"
-                >
-                  <feature.icon className="h-3.5 w-3.5 text-stratview-mint" />
-                  <span className="text-xs font-medium text-primary-foreground/90 whitespace-nowrap">
+            {/* Features - Horizontal scroll on mobile */}
+            <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide justify-center flex-wrap">
+              {features.map((feature, index) => <div key={index} className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/10 flex-shrink-0">
+                  <feature.icon className="h-4 w-4 text-stratview-mint" />
+                  <span className="text-xs sm:text-sm font-medium text-primary-foreground/90 whitespace-nowrap">
                     {feature.text}
                   </span>
-                </div>
-              ))}
+                </div>)}
             </div>
           </div>
         </div>
@@ -143,8 +134,6 @@ const Index = () => {
         </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
