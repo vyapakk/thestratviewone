@@ -12,12 +12,39 @@ const LoginForm = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  /**
+   * BACKEND INTEGRATION POINT: Login Handler
+   * 
+   * Replace the simulated delay with your actual authentication API call.
+   * Expected payload: { email: string, password: string, rememberMe: boolean }
+   * 
+   * Example integration:
+   * const response = await fetch('/api/auth/login', {
+   *   method: 'POST',
+   *   headers: { 'Content-Type': 'application/json' },
+   *   body: JSON.stringify({ email, password, rememberMe })
+   * });
+   * 
+   * On success: redirect to dashboard or set auth token
+   * On error: display error message to user
+   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Simulate login - replace with actual auth logic
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsLoading(false);
+    
+    try {
+      // TODO: Replace with actual API call
+      // const response = await authService.login({ email, password, rememberMe });
+      await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulated delay
+      
+      // TODO: Handle successful login (redirect, store token, etc.)
+      console.log('Login attempt:', { email, rememberMe });
+    } catch (error) {
+      // TODO: Handle login error (show toast, set error state, etc.)
+      console.error('Login failed:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

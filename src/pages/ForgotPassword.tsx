@@ -12,13 +12,39 @@ const ForgotPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  /**
+   * BACKEND INTEGRATION POINT: Password Reset Request
+   * 
+   * Replace the simulated delay with your actual password reset API call.
+   * Expected payload: { email: string }
+   * 
+   * Example integration:
+   * const response = await fetch('/api/auth/forgot-password', {
+   *   method: 'POST',
+   *   headers: { 'Content-Type': 'application/json' },
+   *   body: JSON.stringify({ email })
+   * });
+   * 
+   * On success: show success message, set isSubmitted to true
+   * On error: display error message to user
+   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Simulate API call - replace with actual password reset logic
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsLoading(false);
-    setIsSubmitted(true);
+    
+    try {
+      // TODO: Replace with actual API call
+      // const response = await authService.forgotPassword({ email });
+      await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulated delay
+      
+      console.log('Password reset requested for:', email);
+      setIsSubmitted(true);
+    } catch (error) {
+      // TODO: Handle error (show toast, set error state, etc.)
+      console.error('Password reset request failed:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
