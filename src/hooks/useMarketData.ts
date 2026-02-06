@@ -51,7 +51,15 @@ interface UseMarketDataResult {
   refetch: () => void;
 }
 
-const DATA_URL = "/data/marketData.json";
+/**
+ * USAGE:
+ * Each dashboard should have its own JSON file in /public/data/
+ * named after the dashboard (e.g., "global-aircraft-interiors-market.json").
+ *
+ * Example:
+ *   useMarketData("/data/global-aircraft-interiors-market.json")
+ *   useMarketData("/data/bfe-market-analysis.json")
+ */
 
 function expandValues(years: number[], values: number[]): YearlyData[] {
   return years.map((year, index) => ({
@@ -78,7 +86,7 @@ function expandNestedSegment(
   return result;
 }
 
-export function useMarketData(): UseMarketDataResult {
+export function useMarketData(dataUrl: string = "/data/global-aircraft-interiors-market.json"): UseMarketDataResult {
   const [data, setData] = useState<MarketData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -88,7 +96,7 @@ export function useMarketData(): UseMarketDataResult {
     setError(null);
 
     try {
-      const response = await fetch(DATA_URL, { cache: "no-store" });
+      const response = await fetch(dataUrl, { cache: "no-store" });
       if (!response.ok) {
         throw new Error(`Failed to fetch market data: ${response.statusText}`);
       }
@@ -117,7 +125,7 @@ export function useMarketData(): UseMarketDataResult {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [dataUrl]);
 
   useEffect(() => {
     fetchData();
