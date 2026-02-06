@@ -59,7 +59,13 @@ const DatasetList = ({ categories, activeTab }: DatasetListProps) => {
         return (
           <Card
             key={dataset.id}
-            onClick={() => navigate(`/dataset/${dataset.id}`)}
+            onClick={() => {
+              if (dataset.id === "aircraft-interiors") {
+                navigate("/dashboard/aircraft-interiors");
+              } else {
+                navigate(`/dataset/${dataset.id}`);
+              }
+            }}
             className="group cursor-pointer transition-all duration-300 hover:shadow-card-hover hover:border-primary/30 animate-fade-in-up"
             style={{ animationDelay: `${index * 50}ms` }}
           >
