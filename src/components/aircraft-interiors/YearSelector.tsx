@@ -22,9 +22,9 @@ export function YearSelector({ value, onChange, label = "Select Year", years = d
         <SelectTrigger className="w-[120px] border-border bg-secondary/50">
           <SelectValue placeholder="Year" />
         </SelectTrigger>
-        <SelectContent className="bg-popover border-border">
+        <SelectContent className="bg-[hsl(222,47%,11%)] border-[hsl(217,33%,18%)] text-[hsl(210,40%,96%)]">
           {years.map((year) => (
-            <SelectItem key={year} value={year.toString()}>
+            <SelectItem key={year} value={year.toString()} className="text-[hsl(210,40%,96%)] focus:bg-[hsl(217,33%,18%)] focus:text-[hsl(210,40%,96%)]">
               {year}
             </SelectItem>
           ))}

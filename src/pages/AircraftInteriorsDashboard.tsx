@@ -16,7 +16,7 @@ const AircraftInteriorsDashboard = () => {
   const navigate = useNavigate();
   const [selectedYear, setSelectedYear] = useState(2025);
   const [activeTab, setActiveTab] = useState<MainTabType>("overview");
-  const { data: marketData, isLoading, error, refetch } = useMarketData();
+  const { data: marketData, isLoading, error, refetch } = useMarketData("/data/global-aircraft-interiors-market.json");
 
   if (isLoading) return <DashboardSkeleton />;
 
