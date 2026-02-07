@@ -23,7 +23,7 @@ export function AircraftInteriorsDashboardHeader() {
             stiffness: 200,
             delay: 0.2
           }}>
-              <img src={stratviewLogoWhite} alt="Stratview Research" className="h-14 w-auto" />
+              <img src={stratviewLogoWhite} alt="Stratview Research" className="h-20 w-auto" />
             </motion.div>
             <div>
               <h1 className="text-2xl font-bold text-foreground md:text-3xl">
