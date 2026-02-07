@@ -62,7 +62,7 @@ export function RegionalBarChart({ data, year, title, subtitle, onBarClick }: Re
         </div>
         <ChartDownloadButton onClick={() => downloadChart(chartRef, `${title.toLowerCase().replace(/\s+/g, "-")}`)} />
       </div>
-      <div className="h-[300px] w-full">
+      <div style={{ height: `${Math.max(300, barData.length * 50)}px` }} className="w-full">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={barData} layout="vertical" margin={{ top: 5, right: 30, left: 100, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="hsl(217, 33%, 18%)" horizontal={true} vertical={false} />
