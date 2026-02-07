@@ -127,7 +127,7 @@ const Index = () => {
               <h2 className="text-2xl xl:text-3xl font-bold text-foreground">
                 Sign in to your account
               </h2>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm xl:text-base text-muted-foreground">
                 Access your market research dashboard
               </p>
             </div>
