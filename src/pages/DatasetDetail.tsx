@@ -11,6 +11,7 @@ import stratviewLogo from "@/assets/stratview-logo.png";
 // Map of dashboard IDs that have actual working dashboards
 const activeDashboardRoutes: Record<string, string> = {
   "ai-global": "/dashboard/aircraft-interiors",
+  "ai-cabin-composites": "/dashboard/cabin-composites",
 };
 
 const DatasetDetail = () => {
