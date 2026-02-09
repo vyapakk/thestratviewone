@@ -89,11 +89,11 @@ const Index = () => {
             
             {/* Heading */}
             <div className="text-center space-y-2 mb-4">
-              <h1 className="text-2xl sm:text-2xl font-bold text-primary-foreground leading-tight">
+              <h1 className="text-xl sm:text-2xl font-bold text-primary-foreground leading-tight">
                 Welcome to
                 <span className="text-stratview-mint"> Stratview One</span>
               </h1>
-              <p className="text-sm sm:text-sm text-primary-foreground/80 max-w-sm mx-auto">
+              <p className="text-xs sm:text-sm text-primary-foreground/80 max-w-sm mx-auto">
                 Your unified platform for market research data and strategic intelligence.
               </p>
             </div>
