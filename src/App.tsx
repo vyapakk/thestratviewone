@@ -13,6 +13,7 @@ import CabinCompositesDashboard from "./pages/CabinCompositesDashboard";
 import SoftGoodsDashboard from "./pages/SoftGoodsDashboard";
 import WaterWasteWaterDashboard from "./pages/WaterWasteWaterDashboard";
 import GalleyMarketDashboard from "./pages/GalleyMarketDashboard";
+import PSUMarketDashboard from "./pages/PSUMarketDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,6 +35,7 @@ const App = () => (
           <Route path="/dashboard/soft-goods" element={<SoftGoodsDashboard />} />
           <Route path="/dashboard/water-waste-water" element={<WaterWasteWaterDashboard />} />
           <Route path="/dashboard/galley-market" element={<GalleyMarketDashboard />} />
+          <Route path="/dashboard/psu-market" element={<PSUMarketDashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
