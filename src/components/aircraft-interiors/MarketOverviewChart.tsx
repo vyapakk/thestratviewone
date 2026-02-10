@@ -10,9 +10,10 @@ interface MarketOverviewChartProps {
   data: YearlyData[];
   title: string;
   subtitle?: string;
+  useMillions?: boolean;
 }
 
-export function MarketOverviewChart({ data, title, subtitle }: MarketOverviewChartProps) {
+export function MarketOverviewChart({ data, title, subtitle, useMillions = false }: MarketOverviewChartProps) {
   const chartRef = useRef<HTMLDivElement>(null);
   const { downloadChart } = useChartDownload();
   const [view, setView] = useState<"chart" | "table">("chart");
@@ -97,8 +98,8 @@ export function MarketOverviewChart({ data, title, subtitle }: MarketOverviewCha
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(217, 33%, 18%)" />
-                <XAxis dataKey="year" stroke="hsl(215, 20%, 55%)" fontSize={11} tickLine={false} />
-                <YAxis yAxisId="left" stroke="hsl(215, 20%, 55%)" fontSize={10} tickLine={false} tickFormatter={(value) => `$${(value / 1000).toFixed(1)}B`} width={45} />
+                <XAxis dataKey="year" stroke="hsl(215, 20%, 55%)" fontSize={11} tickLine={false} interval={data.length > 15 ? 1 : 0} />
+                <YAxis yAxisId="left" stroke="hsl(215, 20%, 55%)" fontSize={10} tickLine={false} tickFormatter={(value) => useMillions ? `$${value.toLocaleString()}M` : `$${(value / 1000).toFixed(1)}B`} width={useMillions ? 65 : 45} />
                 <YAxis yAxisId="right" orientation="right" stroke="hsl(215, 20%, 55%)" fontSize={10} tickLine={false} tickFormatter={(value) => `${value.toFixed(0)}%`} domain={[-45, 30]} width={30} />
                 <Tooltip content={<CustomTooltip />} />
                 <Legend content={renderLegend} />
