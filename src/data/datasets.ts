@@ -11,6 +11,7 @@ export const categories = [
       {
         id: "carbon-fiber",
         name: "Carbon Fiber Market",
+        purchased: false,
         dashboards: [
           { id: "cf-global", name: "Global Carbon Fiber Market Overview" },
           { id: "cf-aerospace", name: "Aerospace Carbon Fiber Applications" },
@@ -20,6 +21,7 @@ export const categories = [
       {
         id: "glass-fiber",
         name: "Glass Fiber Composites",
+        purchased: false,
         dashboards: [
           { id: "gf-market", name: "Glass Fiber Market Analysis" },
           { id: "gf-construction", name: "Construction Applications" },
@@ -28,6 +30,7 @@ export const categories = [
       {
         id: "polymer-matrix",
         name: "Polymer Matrix Composites",
+        purchased: false,
         dashboards: [
           { id: "pmc-overview", name: "PMC Market Overview" },
           { id: "pmc-industrial", name: "Industrial Applications" },
@@ -46,6 +49,7 @@ export const categories = [
       {
         id: "aircraft-interiors",
         name: "Aircraft Interiors",
+        purchased: true,
         dashboards: [
           { id: "ai-global", name: "Global Aircraft Interiors Market" },
           { id: "ai-cabin-composites", name: "Aircraft Cabin Interior Composites Market" },
@@ -57,6 +61,7 @@ export const categories = [
       {
         id: "commercial-aircraft",
         name: "Commercial Aircraft",
+        purchased: false,
         dashboards: [
           { id: "ca-fleet", name: "Global Fleet Analysis" },
           { id: "ca-deliveries", name: "Aircraft Deliveries Forecast" },
@@ -66,6 +71,7 @@ export const categories = [
       {
         id: "defense-systems",
         name: "Defense Systems",
+        purchased: false,
         dashboards: [
           { id: "ds-spending", name: "Global Defense Spending" },
           { id: "ds-uav", name: "UAV/Drone Market" },
@@ -83,6 +89,7 @@ export const categories = [
       {
         id: "electric-vehicles",
         name: "Electric Vehicles",
+        purchased: false,
         dashboards: [
           { id: "ev-global", name: "Global EV Market Overview" },
           { id: "ev-battery", name: "EV Battery Market" },
@@ -92,6 +99,7 @@ export const categories = [
       {
         id: "autonomous-driving",
         name: "Autonomous Driving",
+        purchased: false,
         dashboards: [
           { id: "ad-tech", name: "AD Technology Landscape" },
           { id: "ad-sensors", name: "Sensor Market Analysis" },
@@ -100,6 +108,7 @@ export const categories = [
       {
         id: "lightweighting",
         name: "Automotive Lightweighting",
+        purchased: false,
         dashboards: [
           { id: "lw-materials", name: "Lightweight Materials Market" },
           { id: "lw-trends", name: "OEM Lightweighting Strategies" },
@@ -117,6 +126,7 @@ export const categories = [
       {
         id: "construction-composites",
         name: "Construction Composites",
+        purchased: false,
         dashboards: [
           { id: "cc-rebar", name: "Composite Rebar Market" },
           { id: "cc-panels", name: "FRP Panels Analysis" },
@@ -125,6 +135,7 @@ export const categories = [
       {
         id: "smart-buildings",
         name: "Smart Buildings",
+        purchased: false,
         dashboards: [
           { id: "sb-market", name: "Smart Building Market" },
           { id: "sb-hvac", name: "Smart HVAC Systems" },
@@ -143,6 +154,7 @@ export const categories = [
       {
         id: "wind-energy",
         name: "Wind Energy",
+        purchased: false,
         dashboards: [
           { id: "we-turbines", name: "Wind Turbine Market" },
           { id: "we-blades", name: "Blade Materials Analysis" },
@@ -151,6 +163,7 @@ export const categories = [
       {
         id: "marine",
         name: "Marine & Offshore",
+        purchased: false,
         dashboards: [
           { id: "mo-vessels", name: "Marine Vessels Market" },
           { id: "mo-composites", name: "Marine Composites" },
@@ -159,6 +172,7 @@ export const categories = [
       {
         id: "sports-leisure",
         name: "Sports & Leisure",
+        purchased: false,
         dashboards: [
           { id: "sl-equipment", name: "Sports Equipment Market" },
         ],

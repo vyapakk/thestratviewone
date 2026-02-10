@@ -19,7 +19,7 @@ const DatasetDetail = () => {
   const navigate = useNavigate();
 
   // Find the dataset and its parent category
-  let dataset: { id: string; name: string; dashboards: { id: string; name: string }[] } | undefined;
+  let dataset: { id: string; name: string; purchased?: boolean; dashboards: { id: string; name: string }[] } | undefined;
   let parentCategory: (typeof categories)[0] | undefined;
 
   for (const cat of categories) {
