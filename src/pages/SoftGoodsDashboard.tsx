@@ -65,6 +65,7 @@ const SoftGoodsDashboard = () => {
           onNavigateToTab={setActiveTab}
           endUserLabel="End User"
           equipmentLabel="Material Type"
+          useMillions
         />
       );
     }

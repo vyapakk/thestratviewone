@@ -15,6 +15,7 @@ interface MarketOverviewTabProps {
   endUserLabel?: string;
   equipmentLabel?: string;
   processTypeLabel?: string;
+  useMillions?: boolean;
 }
 
 export function MarketOverviewTab({
@@ -25,6 +26,7 @@ export function MarketOverviewTab({
   endUserLabel = "End User",
   equipmentLabel = "Equipment",
   processTypeLabel = "Process Type",
+  useMillions = false,
 }: MarketOverviewTabProps) {
   const { drillDownState, openDrillDown, closeDrillDown } = useDrillDown();
 
@@ -74,8 +76,8 @@ export function MarketOverviewTab({
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <KPICard
           title={`${selectedYear} Market Size`}
-          value={currentMarketValue / 1000}
-          suffix="B"
+          value={useMillions ? currentMarketValue : currentMarketValue / 1000}
+          suffix={useMillions ? "M" : "B"}
           icon={DollarSign}
           delay={0}
           accentColor="primary"
@@ -91,8 +93,8 @@ export function MarketOverviewTab({
         />
         <KPICard
           title="2034 Forecast"
-          value={value2034 / 1000}
-          suffix="B"
+          value={useMillions ? value2034 : value2034 / 1000}
+          suffix={useMillions ? "M" : "B"}
           icon={TrendingUp}
           delay={0.2}
           accentColor="accent"
@@ -103,7 +105,8 @@ export function MarketOverviewTab({
       <MarketOverviewChart
         data={marketData.totalMarket}
         title="Market Size & YoY Growth Trend"
-        subtitle="Historical (2016-2024) and Forecast (2025-2034) data"
+        subtitle={`Historical (${marketData.years[0]}-2024) and Forecast (2025-${marketData.years[marketData.years.length - 1]}) data`}
+        useMillions={useMillions}
       />
 
       {/* Distribution Donuts Row */}
