@@ -5,7 +5,7 @@ import { useState, useRef } from "react";
 import { MousePointer2 } from "lucide-react";
 import { useChartDownload } from "@/hooks/useChartDownload";
 import { ChartDownloadButton } from "./ChartDownloadButton";
-import { ChartTableViewToggle, DataTable } from "./ChartTableViewToggle";
+import { ChartTableViewToggle, DataTable, AnimatedViewSwitch } from "./ChartTableViewToggle";
 
 interface RegionalBarChartProps {
   data: SegmentData[];
@@ -21,6 +21,7 @@ export function RegionalBarChart({ data, year, title, subtitle, onBarClick }: Re
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const chartRef = useRef<HTMLDivElement>(null);
   const { downloadChart } = useChartDownload();
+  const [view, setView] = useState<"chart" | "table">("chart");
 
   const barData = data.map((segment, index) => ({
     name: segment.name,
@@ -63,34 +64,41 @@ export function RegionalBarChart({ data, year, title, subtitle, onBarClick }: Re
   ]);
 
   return (
-    <ChartTableViewToggle
-      tableContent={<DataTable title={title} subtitle={subtitle} headers={tableHeaders} rows={tableRows} />}
-    >
-      <motion.div ref={chartRef} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.4 }} className="rounded-xl border border-border bg-card p-6">
-        <div className="mb-6 flex items-start justify-between">
-          <div>
-            <h3 className="text-lg font-semibold text-foreground">{title}</h3>
-            {subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
-          </div>
+    <motion.div ref={chartRef} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.4 }} className="rounded-xl border border-border bg-card p-6">
+      <div className="mb-6 flex items-start justify-between">
+        <div>
+          <h3 className="text-lg font-semibold text-foreground">{title}</h3>
+          {subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
+        </div>
+        <div className="flex items-center gap-1">
+          <ChartTableViewToggle view={view} onViewChange={setView} />
           <ChartDownloadButton onClick={() => downloadChart(chartRef, `${title.toLowerCase().replace(/\s+/g, "-")}`)} />
         </div>
-        <div style={{ height: `${Math.max(300, barData.length * 50)}px` }} className="w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={barData} layout="vertical" margin={{ top: 5, right: 30, left: 100, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="hsl(217, 33%, 18%)" horizontal={true} vertical={false} />
-              <XAxis type="number" stroke="hsl(215, 20%, 55%)" fontSize={12} tickLine={false} tickFormatter={(value) => `$${(value / 1000).toFixed(1)}B`} />
-              <YAxis type="category" dataKey="name" stroke="hsl(215, 20%, 55%)" fontSize={12} tickLine={false} width={95} />
-              <Tooltip content={<CustomTooltip />} />
-              <Bar dataKey="value" radius={[0, 4, 4, 0]} name="Market Size" onClick={handleBarClick} style={{ cursor: "pointer" }}>
-                {barData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} opacity={activeIndex === null || activeIndex === index ? 1 : 0.5} onMouseEnter={() => setActiveIndex(index)} onMouseLeave={() => setActiveIndex(null)} />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-        <p className="mt-2 text-center text-xs text-muted-foreground">Click any bar to see detailed trends</p>
-      </motion.div>
-    </ChartTableViewToggle>
+      </div>
+      <AnimatedViewSwitch
+        view={view}
+        chart={
+          <>
+            <div style={{ height: `${Math.max(300, barData.length * 50)}px` }} className="w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={barData} layout="vertical" margin={{ top: 5, right: 30, left: 100, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(217, 33%, 18%)" horizontal={true} vertical={false} />
+                  <XAxis type="number" stroke="hsl(215, 20%, 55%)" fontSize={12} tickLine={false} tickFormatter={(value) => `$${(value / 1000).toFixed(1)}B`} />
+                  <YAxis type="category" dataKey="name" stroke="hsl(215, 20%, 55%)" fontSize={12} tickLine={false} width={95} />
+                  <Tooltip content={<CustomTooltip />} />
+                  <Bar dataKey="value" radius={[0, 4, 4, 0]} name="Market Size" onClick={handleBarClick} style={{ cursor: "pointer" }}>
+                    {barData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} opacity={activeIndex === null || activeIndex === index ? 1 : 0.5} onMouseEnter={() => setActiveIndex(index)} onMouseLeave={() => setActiveIndex(null)} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            <p className="mt-2 text-center text-xs text-muted-foreground">Click any bar to see detailed trends</p>
+          </>
+        }
+        table={<DataTable headers={tableHeaders} rows={tableRows} />}
+      />
+    </motion.div>
   );
 }

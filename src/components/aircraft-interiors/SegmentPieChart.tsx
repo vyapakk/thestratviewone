@@ -5,7 +5,7 @@ import { useState, useRef } from "react";
 import { MousePointer2 } from "lucide-react";
 import { useChartDownload } from "@/hooks/useChartDownload";
 import { ChartDownloadButton } from "./ChartDownloadButton";
-import { ChartTableViewToggle, DataTable } from "./ChartTableViewToggle";
+import { ChartTableViewToggle, DataTable, AnimatedViewSwitch } from "./ChartTableViewToggle";
 
 interface SegmentPieChartProps {
   data: SegmentData[];
@@ -15,20 +15,16 @@ interface SegmentPieChartProps {
 }
 
 const chartColors = [
-  "hsl(192, 95%, 55%)",  // Cyan
-  "hsl(38, 92%, 55%)",   // Amber
-  "hsl(142, 71%, 45%)",  // Green
-  "hsl(280, 65%, 60%)",  // Purple
-  "hsl(346, 77%, 50%)",  // Rose
-  "hsl(199, 89%, 48%)",  // Sky Blue
-  "hsl(25, 95%, 55%)",   // Orange
-  "hsl(60, 70%, 50%)",   // Yellow
+  "hsl(192, 95%, 55%)", "hsl(38, 92%, 55%)", "hsl(142, 71%, 45%)",
+  "hsl(280, 65%, 60%)", "hsl(346, 77%, 50%)", "hsl(199, 89%, 48%)",
+  "hsl(25, 95%, 55%)", "hsl(60, 70%, 50%)",
 ];
 
 export function SegmentPieChart({ data, year, title, onSegmentClick }: SegmentPieChartProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const chartRef = useRef<HTMLDivElement>(null);
   const { downloadChart } = useChartDownload();
+  const [view, setView] = useState<"chart" | "table">("chart");
 
   const pieData = data.map((segment, index) => ({
     name: segment.name,
@@ -81,39 +77,46 @@ export function SegmentPieChart({ data, year, title, onSegmentClick }: SegmentPi
   ]);
 
   return (
-    <ChartTableViewToggle
-      tableContent={<DataTable title={title} subtitle={`${year} Distribution`} headers={tableHeaders} rows={tableRows} />}
-    >
-      <motion.div ref={chartRef} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.3 }} className="rounded-xl border border-border bg-card p-6">
-        <div className="mb-4 flex items-start justify-between">
-          <div>
-            <h3 className="text-lg font-semibold text-foreground">{title}</h3>
-            <p className="text-sm text-muted-foreground">{year} Distribution</p>
-          </div>
+    <motion.div ref={chartRef} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.3 }} className="rounded-xl border border-border bg-card p-6">
+      <div className="mb-4 flex items-start justify-between">
+        <div>
+          <h3 className="text-lg font-semibold text-foreground">{title}</h3>
+          <p className="text-sm text-muted-foreground">{year} Distribution</p>
+        </div>
+        <div className="flex items-center gap-1">
+          <ChartTableViewToggle view={view} onViewChange={setView} />
           <ChartDownloadButton onClick={() => downloadChart(chartRef, `${title.toLowerCase().replace(/\s+/g, "-")}-${year}`)} />
         </div>
-        <div className="h-[280px] w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie data={pieData} cx="50%" cy="45%" innerRadius={50} outerRadius={85} paddingAngle={2} dataKey="value" stroke="hsl(222, 47%, 6%)" strokeWidth={2} activeIndex={activeIndex ?? undefined} activeShape={renderActiveShape} onMouseEnter={(_, index) => setActiveIndex(index)} onMouseLeave={() => setActiveIndex(null)} onClick={handlePieClick} style={{ cursor: "pointer" }}>
-                {pieData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
-                ))}
-              </Pie>
-              <Tooltip content={<CustomTooltip />} />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
-        <div className="mt-2 flex flex-wrap justify-center gap-3">
-          {pieData.map((entry, index) => (
-            <div key={index} className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 transition-colors hover:bg-secondary/50" onClick={() => handlePieClick(entry, index)}>
-              <div className="h-3 w-3 rounded-full" style={{ backgroundColor: entry.color }} />
-              <span className="text-xs text-muted-foreground">{entry.name}</span>
+      </div>
+      <AnimatedViewSwitch
+        view={view}
+        chart={
+          <>
+            <div className="h-[280px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie data={pieData} cx="50%" cy="45%" innerRadius={50} outerRadius={85} paddingAngle={2} dataKey="value" stroke="hsl(222, 47%, 6%)" strokeWidth={2} activeIndex={activeIndex ?? undefined} activeShape={renderActiveShape} onMouseEnter={(_, index) => setActiveIndex(index)} onMouseLeave={() => setActiveIndex(null)} onClick={handlePieClick} style={{ cursor: "pointer" }}>
+                    {pieData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip content={<CustomTooltip />} />
+                </PieChart>
+              </ResponsiveContainer>
             </div>
-          ))}
-        </div>
-        <p className="mt-2 text-center text-xs text-muted-foreground">Click any segment to see detailed trends</p>
-      </motion.div>
-    </ChartTableViewToggle>
+            <div className="mt-2 flex flex-wrap justify-center gap-3">
+              {pieData.map((entry, index) => (
+                <div key={index} className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 transition-colors hover:bg-secondary/50" onClick={() => handlePieClick(entry, index)}>
+                  <div className="h-3 w-3 rounded-full" style={{ backgroundColor: entry.color }} />
+                  <span className="text-xs text-muted-foreground">{entry.name}</span>
+                </div>
+              ))}
+            </div>
+            <p className="mt-2 text-center text-xs text-muted-foreground">Click any segment to see detailed trends</p>
+          </>
+        }
+        table={<DataTable headers={tableHeaders} rows={tableRows} />}
+      />
+    </motion.div>
   );
 }
