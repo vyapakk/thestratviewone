@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronRight, LucideIcon } from "lucide-react";
+import { ChevronRight, Lock, LucideIcon } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import AccessRequestDialog from "@/components/AccessRequestDialog";
 
 interface Dashboard {
   id: string;
@@ -11,6 +13,7 @@ interface Dashboard {
 interface Dataset {
   id: string;
   name: string;
+  purchased?: boolean;
   dashboards: Dashboard[];
 }
 
@@ -37,6 +40,8 @@ const iconBgStyles: Record<string, string> = {
 
 const DatasetList = ({ categories, activeTab }: DatasetListProps) => {
   const navigate = useNavigate();
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedDatasetName, setSelectedDatasetName] = useState("");
 
   const filteredCategories =
     activeTab === "all"
@@ -52,44 +57,74 @@ const DatasetList = ({ categories, activeTab }: DatasetListProps) => {
     }))
   );
 
+  const handleDatasetClick = (dataset: typeof datasetsWithCategory[0]) => {
+    if (dataset.purchased === false) {
+      setSelectedDatasetName(dataset.name);
+      setDialogOpen(true);
+    } else {
+      navigate(`/dataset/${dataset.id}`);
+    }
+  };
+
   return (
-    <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
-      {datasetsWithCategory.map((dataset, index) => {
-        const Icon = dataset.categoryIcon;
-        return (
-          <Card
-            key={dataset.id}
-            onClick={() => navigate(`/dataset/${dataset.id}`)}
-            className="group cursor-pointer transition-all duration-300 hover:shadow-card-hover hover:border-primary/30 animate-fade-in-up"
-            style={{ animationDelay: `${index * 50}ms` }}
-          >
-            <CardContent className="p-4">
-              <div className="flex items-center gap-4">
-                <div
-                  className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-105 ${iconBgStyles[dataset.categoryColor]}`}
-                >
-                  <Icon className="h-5 w-5" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-medium text-card-foreground truncate group-hover:text-primary transition-colors">
-                    {dataset.name}
-                  </h3>
-                  <div className="flex items-center gap-2 mt-1">
-                    <Badge variant="secondary" className="text-xs">
-                      {dataset.category}
-                    </Badge>
-                    <span className="text-xs text-muted-foreground">
-                      {dataset.dashboards.length} dashboards
-                    </span>
+    <>
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+        {datasetsWithCategory.map((dataset, index) => {
+          const Icon = dataset.categoryIcon;
+          const isLocked = dataset.purchased === false;
+          return (
+            <Card
+              key={dataset.id}
+              onClick={() => handleDatasetClick(dataset)}
+              className={`group cursor-pointer transition-all duration-300 animate-fade-in-up ${
+                isLocked
+                  ? "opacity-70 hover:opacity-90 hover:shadow-card-hover"
+                  : "hover:shadow-card-hover hover:border-primary/30"
+              }`}
+              style={{ animationDelay: `${index * 50}ms` }}
+            >
+              <CardContent className="p-4">
+                <div className="flex items-center gap-4">
+                  <div
+                    className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition-transform duration-300 group-hover:scale-105 ${iconBgStyles[dataset.categoryColor]}`}
+                  >
+                    <Icon className="h-5 w-5" />
                   </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className={`font-medium truncate transition-colors ${
+                      isLocked
+                        ? "text-muted-foreground"
+                        : "text-card-foreground group-hover:text-primary"
+                    }`}>
+                      {dataset.name}
+                    </h3>
+                    <div className="flex items-center gap-2 mt-1">
+                      <Badge variant="secondary" className="text-xs">
+                        {dataset.category}
+                      </Badge>
+                      <span className="text-xs text-muted-foreground">
+                        {dataset.dashboards.length} dashboards
+                      </span>
+                    </div>
+                  </div>
+                  {isLocked ? (
+                    <Lock className="h-4 w-4 text-muted-foreground/60 shrink-0" />
+                  ) : (
+                    <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0" />
+                  )}
                 </div>
-                <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0" />
-              </div>
-            </CardContent>
-          </Card>
-        );
-      })}
-    </div>
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
+
+      <AccessRequestDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        datasetName={selectedDatasetName}
+      />
+    </>
   );
 };
 
