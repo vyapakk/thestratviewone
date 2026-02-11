@@ -37,6 +37,7 @@ export function AnimatedCounter({
       if (progress < 1) {
         requestAnimationFrame(animate);
       } else {
+        setDisplayValue(endValue);
         previousValue.current = endValue;
       }
     };
