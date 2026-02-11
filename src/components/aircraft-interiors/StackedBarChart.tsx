@@ -52,11 +52,11 @@ export function StackedBarChart({ data, year, title, subtitle, segmentColors, se
       const barTotal = dataEntry?.total ?? payload.reduce((sum: number, p: any) => sum + (p.value || 0), 0);
       const percent = barTotal > 0 ? ((hoveredEntry.value / barTotal) * 100).toFixed(1) : "0";
       return (
-        <div className="rounded-lg border border-border bg-popover p-4 shadow-lg">
-          <p className="font-semibold text-foreground">{label} - {activeSegment.segmentName} ({year})</p>
-          <div className="mt-2 space-y-2 text-sm">
-            <div className="flex items-center gap-2">
-              <div className="h-3 w-3 rounded-sm" style={{ backgroundColor: hoveredEntry.fill }} />
+        <div className="max-w-[280px] sm:max-w-xs rounded-lg border border-border bg-popover p-3 sm:p-4 shadow-lg">
+          <p className="font-semibold text-foreground text-sm sm:text-base break-words">{label} - {activeSegment.segmentName} ({year})</p>
+          <div className="mt-2 space-y-2 text-xs sm:text-sm">
+            <div className="flex items-center gap-2 flex-wrap">
+              <div className="h-3 w-3 rounded-sm flex-shrink-0" style={{ backgroundColor: hoveredEntry.fill }} />
               <span className="font-mono font-medium text-foreground">${hoveredEntry.value?.toLocaleString()}M</span>
               <span className="text-muted-foreground">({percent}% of {label})</span>
             </div>
@@ -102,7 +102,7 @@ export function StackedBarChart({ data, year, title, subtitle, segmentColors, se
   ]);
 
   return (
-    <motion.div ref={chartRef} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="rounded-xl border border-border bg-card p-6">
+    <motion.div ref={chartRef} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="rounded-xl border border-border bg-card p-4 sm:p-6 overflow-hidden">
       <div className="mb-4 flex items-start justify-between">
         <div>
           <h3 className="text-lg font-semibold text-foreground">{title}</h3>
@@ -117,13 +117,13 @@ export function StackedBarChart({ data, year, title, subtitle, segmentColors, se
         view={view}
         chart={
           <>
-            <div style={{ height: `${Math.max(200, chartData.length * 50)}px` }} className="w-full -mx-4 sm:mx-0">
+            <div style={{ height: `${Math.max(200, chartData.length * 50)}px` }} className="w-full -mx-4 sm:mx-0 overflow-x-auto overflow-y-hidden">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={chartData} layout="vertical" margin={{ top: 10, right: 10, left: 20, bottom: 20 }}>
                   <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} stroke="hsl(var(--border))" />
                   <XAxis type="number" tickFormatter={(value) => useMillions ? `$${Math.round(value)}M` : `$${(value / 1000).toFixed(1)}B`} tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }} axisLine={{ stroke: "hsl(var(--border))" }} />
                   <YAxis type="category" dataKey="name" tick={{ fill: "hsl(var(--muted-foreground))", fontSize: 11 }} axisLine={{ stroke: "hsl(var(--border))" }} width={95} />
-                  <Tooltip content={<CustomTooltip />} cursor={{ fill: "hsl(var(--muted)/0.1)" }} />
+                  <Tooltip content={<CustomTooltip />} cursor={{ fill: "hsl(var(--muted)/0.1)" }} wrapperStyle={{ zIndex: 50, maxWidth: '90vw', pointerEvents: 'none' }} />
                   {segmentNames.map((segmentName, index) => (
                     <Bar key={segmentName} dataKey={segmentName} stackId="stack" fill={segmentColors[index % segmentColors.length]} radius={index === segmentNames.length - 1 ? [0, 4, 4, 0] : [0, 0, 0, 0]} onClick={(entry) => handleBarClick(segmentName, entry)} style={{ cursor: onSegmentClick ? "pointer" : "default" }}>
                       {chartData.map((_, barIndex) => (
