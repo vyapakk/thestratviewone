@@ -122,7 +122,7 @@ export function MarketOverviewTab({
           aircraftData={marketData.aircraftType}
           regionData={marketData.region}
           applicationData={marketData.application}
-          equipmentData={marketData.furnishedEquipment}
+          equipmentData={marketData.furnishedEquipment?.length ? marketData.furnishedEquipment : (marketData.materialType ?? [])}
           processTypeData={marketData.processType}
           year={selectedYear}
           onDonutClick={onNavigateToTab}
