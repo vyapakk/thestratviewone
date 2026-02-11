@@ -52,7 +52,7 @@ export function AnimatedCounter({
       animate={{ opacity: 1 }}
     >
       {prefix}
-      {displayValue.toFixed(decimals)}
+      {(typeof displayValue === 'number' && isFinite(displayValue) ? displayValue : 0).toFixed(decimals)}
       {suffix}
     </motion.span>
   );
