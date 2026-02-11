@@ -633,7 +633,7 @@ export function SegmentDetailTab({
               useMillions={useMillions}
             />
           )}
-          {regionByProcessData.length > 0 && (
+          {regionByProcessData.length > 0 && regionByProcessData.some(d => d.total > 0) && (
             <StackedBarChart
               data={regionByProcessData}
               year={selectedYear}
