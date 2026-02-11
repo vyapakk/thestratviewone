@@ -86,6 +86,7 @@ export const categories = [
           { id: "ai-injection-molding", name: "Aircraft Interiors Injection Molding & Others Market" },
           { id: "ai-thermoformed-sheets", name: "Aircraft Interior Thermoformed Sheets Market" },
           { id: "ai-seats", name: "Aircraft Seats Market" },
+          { id: "ai-lighting", name: "Aircraft Interior Lighting Market" },
         ],
       },
       {
