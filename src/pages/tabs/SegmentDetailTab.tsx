@@ -555,16 +555,18 @@ export function SegmentDetailTab({
       {/* Aircraft Type Specific: Stacked Bar Charts */}
       {segmentType === "aircraft" && (
         <>
-          <StackedBarChart
-            data={aircraftByRegionData}
-            year={selectedYear}
-            title="Aircraft Type by Region"
-            subtitle={`${selectedYear} breakdown - bars represent aircraft types, stacks show regions`}
-            segmentColors={SEGMENT_COLORS}
-            segmentNames={regionNames}
-            onSegmentClick={handleStackedBarClick}
-            useMillions={useMillions}
-          />
+          {aircraftByRegionData.length > 0 && aircraftByRegionData.some(d => d.total > 0) && (
+            <StackedBarChart
+              data={aircraftByRegionData}
+              year={selectedYear}
+              title="Aircraft Type by Region"
+              subtitle={`${selectedYear} breakdown - bars represent aircraft types, stacks show regions`}
+              segmentColors={SEGMENT_COLORS}
+              segmentNames={regionNames}
+              onSegmentClick={handleStackedBarClick}
+              useMillions={useMillions}
+            />
+          )}
           {aircraftByEndUserData.length > 0 && aircraftByEndUserData.some(d => d.total > 0) && (
             <StackedBarChart
               data={aircraftByEndUserData}
@@ -583,16 +585,18 @@ export function SegmentDetailTab({
       {/* Region Specific: Stacked Bar Charts */}
       {segmentType === "region" && (
         <>
-          <StackedBarChart
-            data={regionByAircraftData}
-            year={selectedYear}
-            title="Region by Aircraft Type"
-            subtitle={`${selectedYear} breakdown - bars represent regions, stacks show aircraft types`}
-            segmentColors={SEGMENT_COLORS}
-            segmentNames={aircraftTypeNames}
-            onSegmentClick={handleStackedBarClick}
-            useMillions={useMillions}
-          />
+          {regionByAircraftData.length > 0 && regionByAircraftData.some(d => d.total > 0) && (
+            <StackedBarChart
+              data={regionByAircraftData}
+              year={selectedYear}
+              title="Region by Aircraft Type"
+              subtitle={`${selectedYear} breakdown - bars represent regions, stacks show aircraft types`}
+              segmentColors={SEGMENT_COLORS}
+              segmentNames={aircraftTypeNames}
+              onSegmentClick={handleStackedBarClick}
+              useMillions={useMillions}
+            />
+          )}
           {regionByApplicationData.length > 0 && (
             <StackedBarChart
               data={regionByApplicationData}
@@ -605,26 +609,30 @@ export function SegmentDetailTab({
               useMillions={useMillions}
             />
           )}
-          <StackedBarChart
-            data={regionByEndUserData}
-            year={selectedYear}
-            title={`Region by ${endUserLabel}`}
-            subtitle={`${selectedYear} breakdown - bars represent regions, stacks show ${endUserLabel.toLowerCase()}`}
-            segmentColors={SEGMENT_COLORS}
-            segmentNames={endUserNames}
-            onSegmentClick={handleStackedBarClick}
-            useMillions={useMillions}
-          />
-          <StackedBarChart
-            data={regionByEquipmentData}
-            year={selectedYear}
-            title={`Region by ${equipmentLabel}`}
-            subtitle={`${selectedYear} breakdown - bars represent regions, stacks show ${equipmentLabel.toLowerCase()}`}
-            segmentColors={SEGMENT_COLORS}
-            segmentNames={equipmentNames}
-            onSegmentClick={handleStackedBarClick}
-            useMillions={useMillions}
-          />
+          {regionByEndUserData.length > 0 && regionByEndUserData.some(d => d.total > 0) && (
+            <StackedBarChart
+              data={regionByEndUserData}
+              year={selectedYear}
+              title={`Region by ${endUserLabel}`}
+              subtitle={`${selectedYear} breakdown - bars represent regions, stacks show ${endUserLabel.toLowerCase()}`}
+              segmentColors={SEGMENT_COLORS}
+              segmentNames={endUserNames}
+              onSegmentClick={handleStackedBarClick}
+              useMillions={useMillions}
+            />
+          )}
+          {regionByEquipmentData.length > 0 && regionByEquipmentData.some(d => d.total > 0) && (
+            <StackedBarChart
+              data={regionByEquipmentData}
+              year={selectedYear}
+              title={`Region by ${equipmentLabel}`}
+              subtitle={`${selectedYear} breakdown - bars represent regions, stacks show ${equipmentLabel.toLowerCase()}`}
+              segmentColors={SEGMENT_COLORS}
+              segmentNames={equipmentNames}
+              onSegmentClick={handleStackedBarClick}
+              useMillions={useMillions}
+            />
+          )}
           {regionByProcessData.length > 0 && (
             <StackedBarChart
               data={regionByProcessData}
@@ -653,7 +661,7 @@ export function SegmentDetailTab({
       )}
 
       {/* Application Specific: Stacked Bar Charts */}
-      {segmentType === "application" && (
+      {segmentType === "application" && applicationByRegionData.length > 0 && applicationByRegionData.some(d => d.total > 0) && (
         <StackedBarChart
           data={applicationByRegionData}
           year={selectedYear}
@@ -667,7 +675,7 @@ export function SegmentDetailTab({
       )}
 
       {/* Equipment Specific: Stacked Bar Charts */}
-      {segmentType === "equipment" && (
+      {segmentType === "equipment" && equipmentByRegionData.length > 0 && equipmentByRegionData.some(d => d.total > 0) && (
         <StackedBarChart
           data={equipmentByRegionData}
           year={selectedYear}
